@@ -36,7 +36,8 @@ and dump them onto blob storage.
 Then, we need to make that data available again into postgres. Therefore we 
 use the `pg_analytics` postgres extension. In this POC we use `paradedb` which
 includes that extension. `pg_analytics` is an extension which use the foreign data
-wrappers and uses ``duckdb`` under the hood. 
+wrappers and uses ``duckdb`` under the hood. So, actually we are dumping and reading
+data from external storage using the same technology!
 
 ## 2. Offloading data from hot to cold storage
 
@@ -127,3 +128,9 @@ OPTIONS (files 's3://pocpg/single/metrics.parquet');
 select * from metrics_cs;
 
 ```
+
+## Some words of caution
+
+- Of course, cold stored data is slower than hot stored data
+- If partitioning is used, smart sizing the partitions is key for query preformance
+
